@@ -7,9 +7,10 @@ export const useStage = (player, resetPlayer) => {
   useEffect(() => {
     const updateStage = (prevStage) => {
       //first clear 'flush' the stage
-      const newStage = prevStage.map((
-        row //multidimensional array hence 2 maps, if performance is priority use for loop
-      ) => row.map((cell) => (cell[1] === "clear" ? [0, "clear"] : cell)));
+      //multidimensional array hence 2 maps, if performance is priority use for loop
+      const newStage = prevStage.map((row) =>
+        row.map((cell) => (cell[1] === "clear" ? [0, "clear"] : cell))
+      );
       //refer to gamehelper for cell[1]
 
       //draw the tetromino, getting to know the tetromino pass down
@@ -21,17 +22,24 @@ export const useStage = (player, resetPlayer) => {
             newStage[y + player.pos.y][x + player.pos.x] = [
               //the coordinate on the stage
               value,
-              `${player.collided ? "merged" : "clear"}`, //checking the stage to merge with the tetromino or not
+              `${player.collided ? "merged" : "clear"}`,
+              //checking the stage to merge with the tetromino or not
             ];
-            // console.log(newStage);
           }
         });
       });
+
+      if (player.collided) {
+        resetPlayer();
+        //move the player to the top, and the old tetromino will stay at the bottom
+      }
       return newStage;
     };
 
     setStage((prev) => updateStage(prev));
-  }, [player.pos.y, player.pos.x, player.tetromino, player.collided]);
+  }, [player, resetPlayer]);
+  // }, [player.pos.y, player.pos.x, player.tetromino, player.collided]);
+  //if the teterimino happen to be the same, then it will not appear (bug)
 
   return [stage, setStage];
 };

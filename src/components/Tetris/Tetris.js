@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createStage } from "../../gameHelpers"; // create clean state
+import { createStage, checkCollision } from "../../gameHelpers"; // create clean state
 
 import Stage from "../Stage/Stage";
 import Display from "../Display/Display";
@@ -14,23 +14,37 @@ const Tetris = (props) => {
   const [dropTime, setDropTime] = useState(null);
   const [gameOver, setGameOver] = useState(false);
 
-  const [player, updatePlayerPos, resetPlayer] = usePlayer();
+  const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
   const [stage, setStage] = useStage(player, resetPlayer);
 
-  console.log("re-render");
+  // console.log("re-render");
 
   const movePlayer = (direction) => {
-    updatePlayerPos({ x: direction, y: 0 });
+    if (!checkCollision(player, stage, { x: direction, y: 0 })) {
+      updatePlayerPos({ x: direction, y: 0 });
+      console.log("move tetris");
+    }
   };
 
   const startGame = () => {
     //reset everything
     setStage(createStage());
     resetPlayer();
+    setGameOver(false);
   };
 
   const drop = () => {
-    updatePlayerPos({ x: 0, y: 1, collided: false });
+    if (!checkCollision(player, stage, { x: 0, y: 1 })) {
+      //if checkCollision is false, 'not collided'
+      updatePlayerPos({ x: 0, y: 1, collided: false });
+    } else {
+      if (player.pos.y < 1) {
+        console.log("game over");
+        setGameOver(true);
+        setDropTime(null);
+      }
+      updatePlayerPos({ x: 0, y: 0, collided: true });
+    }
   };
 
   const dropPlayer = () => {
@@ -39,7 +53,7 @@ const Tetris = (props) => {
 
   const move = ({ keyCode }) => {
     //destructuring 'keycode' from event (if not, use e.keycode)
-    console.log(keyCode);
+    // console.log(keyCode);
     if (!gameOver) {
       if (keyCode === 37) {
         movePlayer(-1);
@@ -47,6 +61,8 @@ const Tetris = (props) => {
         movePlayer(1);
       } else if (keyCode === 40) {
         dropPlayer();
+      } else if (keyCode === 38) {
+        playerRotate(stage, 1);
       }
     } // TODO: add space bar
   };
@@ -70,7 +86,7 @@ const Tetris = (props) => {
               <Display text="Level" />
             </div>
           )}
-          <StartButton onClick={startGame} />
+          <StartButton callback={startGame} />
         </aside>
       </div>
     </div>
