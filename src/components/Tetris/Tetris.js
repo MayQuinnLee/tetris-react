@@ -5,6 +5,7 @@ import Stage from "../Stage/Stage";
 import Display from "../Display/Display";
 import StartButton from "../StartButton/StartButton";
 
+import { useInterval } from "../../hooks/useInterval";
 import { usePlayer } from "../../hooks/usePlayer";
 import { useStage } from "../../hooks/useStage";
 
@@ -29,6 +30,7 @@ const Tetris = (props) => {
   const startGame = () => {
     //reset everything
     setStage(createStage());
+    setDropTime(1000);
     resetPlayer();
     setGameOver(false);
   };
@@ -46,9 +48,22 @@ const Tetris = (props) => {
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
+  //on keyup
+  const keyUp = ({ keyCode }) => {
+    if (!gameOver) {
+      if (keyCode === 40) {
+        drop();
+        setDropTime(1000);
+        console.log("set-interval on");
+      }
+    }
+  };
 
+  //onkey down
   const dropPlayer = () => {
     drop();
+    setDropTime(null);
+    console.log("set-interval off");
   };
 
   const move = ({ keyCode }) => {
@@ -67,12 +82,17 @@ const Tetris = (props) => {
     } // TODO: add space bar
   };
 
+  useInterval(() => {
+    drop();
+  }, dropTime);
+
   return (
     <div
       className={classes.TetrisWrapper}
       role="button"
       tabIndex="0"
       onKeyDown={(e) => move(e)}
+      onKeyUp={keyUp}
     >
       <div className={classes.Tetris}>
         <Stage stage={stage} /> {/*initially is createStage() */}
