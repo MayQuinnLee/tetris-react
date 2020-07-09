@@ -116,7 +116,7 @@ const Tetris = (props) => {
             <div>
               <Display text={`Score: ${score}`} />
               <Display text={`Rows: ${rows}`} />
-              <Display text={`Level: ${level}} />
+              <Display text={`Level: ${level}`} />
             </div>
           )}
           <StartButton callback={startGame} />
