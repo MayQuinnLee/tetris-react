@@ -13,4 +13,5 @@ const Cell = (props) => (
   ></div>
 );
 
-export default Cell;
+export default React.memo(Cell);
+//React.memo memoized the cell, and only re-renders cell that changes (cell that changes are the cell with tetris moving)
