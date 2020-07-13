@@ -9,10 +9,10 @@ export const StyledStage = styled.div`
   grid-template-columns: repeat(${(props) => props.width}, 1fr);
   /*We want them to be perfect squares*/
 
-  grid-gap: 1px;
+  grid-gap: 1.5px;
   border: 2px solid rgb(224, 224, 22);
   width: 100%;
   max-width: 25vw;
-  background: #111;
+  background: #999;
 `;
 //refer to gameHelper on the grid height and width

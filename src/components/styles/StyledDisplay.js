@@ -12,7 +12,7 @@ export const StyledDisplay = styled.div`
   background: #fff;
   font-family: Pixel, Arial, Helvetica, sans-serif;
   font-size: 0.8rem;
-  color: ${(props) => props.color};
+  color: ${(props) => (props.gameOver ? "red" : "#999")};
 `;
 
 export const StyledButton = styled.button`

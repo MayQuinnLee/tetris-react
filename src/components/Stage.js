@@ -6,7 +6,7 @@ const Stage = (props) => (
   <StyledStage height={props.stage.length} width={props.stage[0].length}>
     {props.stage.map((row) =>
       row.map((cell, x) => {
-        // console.log(cell[0]);
+        //in every row there is 12 [0,clear]
         return <Cell key={x} type={cell[0]} />;
       })
     )}

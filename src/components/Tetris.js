@@ -24,15 +24,15 @@ const Tetris = (props) => {
 
   // console.log("re-render");
 
+  //Moving tetromino left or right
   const movePlayer = (direction) => {
     if (!checkCollision(player, stage, { x: direction, y: 0 })) {
       updatePlayerPos({ x: direction, y: 0 });
-      console.log("move tetris");
     }
   };
 
+  //Reset everything
   const startGame = () => {
-    //reset everything
     setStage(createStage());
     setDropTime(1000);
     resetPlayer();
@@ -43,24 +43,26 @@ const Tetris = (props) => {
   };
 
   const drop = () => {
-    //Increase level when player has cleared 10 rows
+    //Increase level and dropTime when every 10 rows are cleared
     if (rows > (level + 1) * 10) {
       setLevel((prev) => prev + 1);
-      //also increase the speed
       setDropTime(1000 / (level + 1) + 200);
+      //TODO: Amend dropTime
     }
+
+    //if checkCollision is false, 'not collided'
     if (!checkCollision(player, stage, { x: 0, y: 1 })) {
-      //if checkCollision is false, 'not collided'
       updatePlayerPos({ x: 0, y: 1, collided: false });
     } else {
+      //Check if game over
       if (player.pos.y < 1) {
-        console.log("game over");
         setGameOver(true);
         setDropTime(null);
       }
       updatePlayerPos({ x: 0, y: 0, collided: true });
     }
   };
+
   //on keyup
   const keyUp = ({ keyCode }) => {
     if (!gameOver) {
@@ -79,20 +81,31 @@ const Tetris = (props) => {
     console.log("set-interval off");
   };
 
-  const move = ({ keyCode }) => {
+  //on space bar
+  const dropDown = () => {
+    //y+1 until collided === true
+    while (!checkCollision(player, stage, { x: 0, y: 1 })) {
+      player.pos.y++;
+    }
+  };
+
+  const move = (e) => {
     //destructuring 'keycode' from event (if not, use e.keycode)
-    console.log(keyCode);
+    console.log(e.keyCode);
     if (!gameOver) {
-      if (keyCode === 37) {
+      if (e.keyCode === 37) {
         movePlayer(-1);
-      } else if (keyCode === 39) {
+      } else if (e.keyCode === 39) {
         movePlayer(1);
-      } else if (keyCode === 40) {
+      } else if (e.keyCode === 40) {
         dropPlayer();
-      } else if (keyCode === 38) {
+      } else if (e.keyCode === 32) {
+        e.preventDefault();
+        dropDown();
+      } else if (e.keyCode === 38) {
         playerRotate(stage, 1);
       }
-    } // TODO: add space bar
+    }
   };
 
   useInterval(() => {
@@ -118,7 +131,7 @@ const Tetris = (props) => {
               <Display text={`Level: ${level}`} />
             </div>
           )}
-          <StartButton callback={startGame} />
+          <StartButton start={startGame} />
         </aside>
       </StyledTetris>
     </StyledTetrisWrapper>

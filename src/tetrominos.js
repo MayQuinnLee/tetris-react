@@ -1,5 +1,5 @@
 export const TETROMINOS = {
-  0: { shape: [[0]], color: "rgba(0,0,0,0.8)" },
+  0: { shape: [[0]], color: "0,0,0" },
   I: {
     //refer to useStage
     shape: [
@@ -8,7 +8,7 @@ export const TETROMINOS = {
       [0, "I", 0, 0], //3rd forEach, y=2
       [0, "I", 0, 0], //4th forEach, y=3
     ],
-    color: "rgba(80,227,230,0.8)",
+    color: "80,227,230",
   },
   J: {
     shape: [
@@ -16,7 +16,7 @@ export const TETROMINOS = {
       [0, "J", 0],
       ["J", "J", 0],
     ],
-    color: "rgba(36,95,223,0.8)",
+    color: "36,95,223",
   },
   L: {
     shape: [
@@ -24,14 +24,14 @@ export const TETROMINOS = {
       [0, "L", 0],
       [0, "L", "L"],
     ],
-    color: "rgba(223,173,36,0.8)",
+    color: "223,173,36",
   },
   O: {
     shape: [
       ["O", "O"],
       ["O", "O"],
     ],
-    color: "rgba(223,217,36,0.8)",
+    color: "223,217,36",
   },
   S: {
     shape: [
@@ -39,7 +39,7 @@ export const TETROMINOS = {
       ["S", "S", 0],
       [0, 0, 0],
     ],
-    color: "rgba(48,211,56,0.8)",
+    color: "48,211,56",
   },
   T: {
     shape: [
@@ -47,7 +47,7 @@ export const TETROMINOS = {
       ["T", "T", "T"],
       [0, "T", 0],
     ],
-    color: "rgba(132,51,198,0.8)",
+    color: "132,51,198",
   },
   Z: {
     shape: [
@@ -55,7 +55,7 @@ export const TETROMINOS = {
       [0, "Z", "Z"],
       [0, 0, 0],
     ],
-    color: "rgba(227,78,78,0.8)",
+    color: "227,78,78",
   },
 };
 
