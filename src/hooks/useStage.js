@@ -48,7 +48,7 @@ export const useStage = (player, resetPlayer) => {
               `${player.collided ? "merged" : "clear"}`,
               //checking the stage to merge with the tetromino or not
             ];
-            console.log(value);
+            // console.log(value);
           }
         });
       });

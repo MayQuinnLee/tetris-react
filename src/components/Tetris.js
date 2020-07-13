@@ -46,8 +46,8 @@ const Tetris = (props) => {
     //Increase level and dropTime when every 10 rows are cleared
     if (rows > (level + 1) * 10) {
       setLevel((prev) => prev + 1);
-      setDropTime(1000 / (level + 1) + 200);
-      //TODO: Amend dropTime
+      setDropTime(1000 / (level + 1) + 400);
+      console.log("speed increase & level up");
     }
 
     //if checkCollision is false, 'not collided'
@@ -91,7 +91,7 @@ const Tetris = (props) => {
 
   const move = (e) => {
     //destructuring 'keycode' from event (if not, use e.keycode)
-    console.log(e.keyCode);
+    // console.log(e.keyCode);
     if (!gameOver) {
       if (e.keyCode === 37) {
         movePlayer(-1);
